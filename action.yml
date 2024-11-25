@@ -4,23 +4,21 @@ branding:
   icon: 'list'
   color: 'purple'
 
-on:
-  workflow_call:
-    inputs:
-      variable:
-        description: 'The variable to choose from'
-        required: true
-      selection:
-        description: 'The selection to make from the variable'
-        required: true
-      secret:
-        description: 'Whether the variable is a secret'
-        type: boolean
-        required: false
-      multiline:
-        description: 'Whether the variable is multiline'
-        type: boolean
-        required: false
+inputs:
+  variable:
+    description: 'The variable to choose from'
+    required: true
+  selection:
+    description: 'The selection to make from the variable'
+    required: true
+  secret:
+    description: 'Whether the variable is a secret'
+    type: boolean
+    required: false
+  multiline:
+    description: 'Whether the variable is multiline'
+    type: boolean
+    required: false
 
 runs:  
   using: 'composite'
