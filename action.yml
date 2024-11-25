@@ -26,7 +26,7 @@ runs:
     - name: 'Choose single line from variable'
       if: ${{ inputs.secret != true && inputs.multiline != true }}
       run: |
-        ${{ inputs.variable }}=$(echo "${{ vars[format('{0}', inputs.variable]) }}" | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
+        ${{ inputs.variable }}=$(echo "${{ vars[format('{0}', inputs.variable)] }}" | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
         echo $${{ inputs.variable }}
         echo "${{ inputs.variable }}=$${{ inputs.variable }}" >> $GITHUB_ENV
       shell: bash
