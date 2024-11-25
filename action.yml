@@ -1,5 +1,5 @@
 name: 'Choose from variables'
-description: 'Choose from variables'
+description: 'Github action to extract information from environment variables or secrets based on an input'
 branding:
   icon: 'list'
   color: 'purple'
