@@ -22,9 +22,9 @@ on:
 
 jobs:
   steps:  
-    - if: ${{ github.event.inputs.secret == 'false' && github.event.inputs.multiline == 'false' }}
+    - if: ${{ inputs.secret == 'false' && inputs.multiline == 'false' }}
       name: 'Choose single line from variable'
       run: |
-        ${{ github.event.inputs.variable }}=$(echo '${{ vars.PLESK_TARGETS }}' | grep "^${{ github.event.inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
-        echo $${{ github.event.inputs.variable }}
-        echo "${{ github.event.inputs.variable }}=$${{ github.event.inputs.variable }}" >> $GITHUB_ENV
+        ${{ inputs.variable }}=$(echo '${{ format('vars.{0}, inputs.variable }}' | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
+        echo $${{ inputs.variable }}
+        echo "${{ inputs.variable }}=$${{ inputs.variable }}" >> $GITHUB_ENV
