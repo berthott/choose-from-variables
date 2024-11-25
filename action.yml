@@ -22,13 +22,11 @@ inputs:
 
 runs:  
   using: 'composite'
-  env: 
-    VARIABLE: ${{ secrets[inputs.variable] }}
   steps:
     - name: 'Choose single line from variable'
       if: ${{ inputs.secret != true && inputs.multiline != true }}
       run: |
-        ${{ inputs.variable }}=$(echo "$VARIABLE" | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
+        ${{ inputs.variable }}=$(echo "${{ secrets[inputs.variable] }}" | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
         echo $${{ inputs.variable }}
         echo "${{ inputs.variable }}=$${{ inputs.variable }}" >> $GITHUB_ENV
       shell: bash
