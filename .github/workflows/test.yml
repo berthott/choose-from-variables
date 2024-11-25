@@ -1,0 +1,15 @@
+name: Test choosing from a variable
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Choose variable
+      uses: ./ # Use the action in the current repository
+      with:
+        variable: 'TARGET'
+        selection: 'production'
+    - name: Print chosen variable
+      run: echo "Chosen variable is $TARGET"

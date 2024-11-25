@@ -1,0 +1,30 @@
+name: 'Choose from variables'
+description: 'Choose from variables'
+branding:
+  icon: 'list'
+  color: 'purple'
+
+on:
+  workflow_call:
+    inputs:
+      variable:
+        description: 'The variable to choose from'
+        required: true
+      selection:
+        description: 'The selection to make from the variable'
+        required: true
+      secret:
+        description: 'Whether the variable is a secret'
+        required: false
+      multiline:
+        description: 'Whether the variable is multiline'
+        required: false
+
+jobs:
+  steps:  
+    - if: ${{ github.event.inputs.secret == 'false' && github.event.inputs.multiline == 'false' }}
+      name: 'Choose single line from variable'
+      run: |
+        ${{ github.event.inputs.variable }}=$(echo '${{ vars.PLESK_TARGETS }}' | grep "^${{ github.event.inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
+        echo $${{ github.event.inputs.variable }}
+        echo "${{ github.event.inputs.variable }}=$${{ github.event.inputs.variable }}" >> $GITHUB_ENV
