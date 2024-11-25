@@ -29,3 +29,4 @@ runs:
         ${{ inputs.variable }}=$(echo "${{ format('vars.{0}', inputs.variable) }}" | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
         echo $${{ inputs.variable }}
         echo "${{ inputs.variable }}=$${{ inputs.variable }}" >> $GITHUB_ENV
+      shell: bash
