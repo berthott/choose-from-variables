@@ -15,15 +15,17 @@ on:
         required: true
       secret:
         description: 'Whether the variable is a secret'
+        type: boolean
         required: false
       multiline:
         description: 'Whether the variable is multiline'
+        type: boolean
         required: false
 
 jobs:
   steps:  
-    - if: ${{ inputs.secret == 'false' && inputs.multiline == 'false' }}
-      name: 'Choose single line from variable'
+    - name: 'Choose single line from variable'
+      if: ${{ inputs.secret && inputs.multiline }}
       run: |
         ${{ inputs.variable }}=$(echo '${{ format('vars.{0}, inputs.variable }}' | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
         echo $${{ inputs.variable }}
