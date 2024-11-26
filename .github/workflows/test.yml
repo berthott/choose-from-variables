@@ -26,6 +26,7 @@ jobs:
         output_name: MULTI_LINE_SINGLE_QUOTES
         selection: development
         multi_line: true
+        single_quotes: true
     - name: Choose multiple variable with double quotes
       uses: ./ # Use the action in the current repository
       with:
@@ -33,7 +34,6 @@ jobs:
         output_name: MULTI_LINE_DOUBLE_QUOTES
         selection: development
         multi_line: true
-        double_quotes: true
     - name: Test the environment variables
       run: |
         echo "Single line, single quotes: $SINGLE_LINE_SINGLE_QUOTES" 
