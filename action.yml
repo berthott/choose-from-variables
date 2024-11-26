@@ -31,7 +31,7 @@ runs:
     - name: 'Choose single line from variable with single quotes'
       if: inputs.multi_line != 'true' && inputs.single_quotes == 'true'
       run: |
-        ${{ inputs.output_name }}=$(echo '${{ inputs.variable }}' | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
+        ${{ inputs.output_name }}=$(echo "${{ inputs.variable }}" | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
         echo $${{ inputs.output_name }}
         echo "${{ inputs.output_name }}=$${{ inputs.output_name }}" >> $GITHUB_ENV
       shell: bash
@@ -39,7 +39,7 @@ runs:
     - name: 'Choose single line from variable with double quotes'
       if: inputs.multi_line != 'true' && inputs.single_quotes != 'true'
       run: |
-        ${{ inputs.output_name }}=$(echo "${{ inputs.variable }}" | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
+        ${{ inputs.output_name }}=$(echo '${{ inputs.variable }}' | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
         echo $${{ inputs.output_name }}
         echo "${{ inputs.output_name }}=$${{ inputs.output_name }}" >> $GITHUB_ENV
       shell: bash
@@ -47,7 +47,7 @@ runs:
     - name: 'Choose multi line line from variable with single quotes'
       if: inputs.multi_line == 'true' && inputs.single_quotes == 'true'
       run: |
-        ${{ inputs.output_name }}=$(echo '${{ inputs.variable }}' | awk -v env="${{ inputs.selection }}" '
+        ${{ inputs.output_name }}=$(echo "${{ inputs.variable }}" | awk -v env="${{ inputs.selection }}" '
           $0 ~ "^"env"=" {printing=1; sub("^"env"=", ""); print; next}
           printing && $0 ~ /^[a-z]+=/ {exit}
           printing {print}
@@ -60,7 +60,7 @@ runs:
     - name: 'Choose multi line line from variable with double quotes'
       if: inputs.multi_line == 'true' && inputs.single_quotes != 'true'
       run: |
-        ${{ inputs.output_name }}=$(echo "${{ inputs.variable }}" | awk -v env="${{ inputs.selection }}" '
+        ${{ inputs.output_name }}=$(echo '${{ inputs.variable }}' | awk -v env="${{ inputs.selection }}" '
           $0 ~ "^"env"=" {printing=1; sub("^"env"=", ""); print; next}
           printing && $0 ~ /^[a-z]+=/ {exit}
           printing {print}
