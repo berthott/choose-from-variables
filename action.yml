@@ -25,7 +25,20 @@ runs:
     - name: 'Choose single line from variable'
       if: ${{ inputs.multiline != true }}
       run: |
-        ${{ inputs.output_name }}=$(echo "${{ inputs.variable }}" | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
+        ${{ inputs.output_name }}=$(echo '${{ inputs.variable }}'' | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
         echo $${{ inputs.output_name }}
         echo "${{ inputs.output_name }}=$${{ inputs.output_name }}" >> $GITHUB_ENV
+      shell: bash
+
+    - name: 'Choose multiline line from variable'
+      if: ${{ inputs.multiline == true }}
+      run: |
+        ${{ inputs.output_name }}=$(echo '${{ inputs.variable }}' | awk -v env="${{ inputs.selection }}" '
+          $0 ~ "^"env"=" {printing=1; sub("^"env"=", ""); print; next}
+          printing && $0 ~ /^[a-z]+=/ {exit}
+          printing {print}
+        ')
+        echo "${{ inputs.output_name }}<<EOF" >> $GITHUB_ENV
+        echo "$${{ inputs.output_name }}" >> $GITHUB_ENV
+        echo "EOF" >> $GITHUB_ENV
       shell: bash
