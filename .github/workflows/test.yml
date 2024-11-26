@@ -23,5 +23,5 @@ jobs:
       run: |
         echo "Single: $SINGLE_LINE" 
         if [[ ${{ env.SINGLE_LINE }} == "Production Test" ]]; then echo "Single Success"; else exit 1; fi
-        echo "Single: $MULTI_LINE" 
+        echo "Multi: $MULTI_LINE" 
         if [[ ${{ env.MULTI_LINE }} == *"Hello Development"* ]]; then echo "Multi Success"; else exit 1; fi
