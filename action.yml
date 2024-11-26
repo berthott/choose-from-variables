@@ -5,11 +5,11 @@ branding:
   color: 'purple'
 
 inputs:
-  variables:
-    description: 'Your github variables or secrets'
-    required: true
   variable:
     description: 'The variable to choose from'
+    required: true
+  output_name:
+    description: 'The name of the output variable'
     required: true
   selection:
     description: 'The selection to make from the variable'
@@ -26,7 +26,7 @@ runs:
       if: ${{ inputs.multiline != true }}
       run: |
         echo "${{ inputs.variables }}"
-        ${{ inputs.variable }}=$(echo "${{ inputs.variables[inputs.variable] }}" | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
+        ${{ inputs.variable }}=$(echo "${{ inputs.variable }}" | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
         echo $${{ inputs.variable }}
         echo "${{ inputs.variable }}=$${{ inputs.variable }}" >> $GITHUB_ENV
       shell: bash

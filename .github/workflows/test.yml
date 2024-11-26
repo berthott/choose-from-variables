@@ -9,8 +9,8 @@ jobs:
     - name: Choose variable
       uses: ./ # Use the action in the current repository
       with:
-        variables: ${{ toJson(vars) }}
-        variable: 'TARGET'
-        selection: 'production'
+        variable: ${{ vars.TARGET }}
+        output_name: TARGET
+        selection: production
     - name: Print chosen variable
       run: echo "Chosen variable is $TARGET"
