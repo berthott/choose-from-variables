@@ -17,7 +17,7 @@ jobs:
       with:
         variable: ${{ vars.MULTI_LINES }}
         output_name: MULTI_LINE
-        selection: development
+        selection: production
     - name: Test the environment variables
       run: |
         echo "Single: $SINGLE_LINE" 
