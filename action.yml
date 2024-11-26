@@ -23,7 +23,7 @@ runs:
   using: 'composite'
   steps:
     - name: 'Choose single line from variable'
-      if: ${{ inputs.multiline != true }}
+      if: inputs.multiline != "true"
       run: |
         ${{ inputs.output_name }}=$(echo '${{ inputs.variable }}' | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
         echo $${{ inputs.output_name }}
@@ -31,7 +31,7 @@ runs:
       shell: bash
 
     - name: 'Choose multiline line from variable'
-      if: ${{ inputs.multiline == true }}
+      if: inputs.multiline == "true"
       run: |
         ${{ inputs.output_name }}=$(echo '${{ inputs.variable }}' | awk -v env="${{ inputs.selection }}" '
           $0 ~ "^"env"=" {printing=1; sub("^"env"=", ""); print; next}
