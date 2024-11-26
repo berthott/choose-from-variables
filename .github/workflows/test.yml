@@ -14,4 +14,4 @@ jobs:
         selection: production
     - name: Print chosen variable
       run: |
-        [[ $SINGLE_LINE == "Production Test" ]] && echo "Success" || exit 1
+        [[ "$SINGLE_LINE" == "Production Test" ]] && echo "Success" || exit 1
