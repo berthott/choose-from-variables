@@ -41,6 +41,6 @@ jobs:
         echo "Single line, double quotes: $SINGLE_LINE_DOUBLE_QUOTES" 
         if [[ ${{ env.SINGLE_LINE_DOUBLE_QUOTES }} == "Production Test" ]]; then echo "Single Success"; else exit 1; fi
         echo "Multi line, single quotes: $MULTI_LINE_SINGLE_QUOTES" 
-        if [[ "${{ env.MULTI_LINE_SINGLE_QUOTES }}"" =~ "Hello Development" ]]; then echo "Multi Success"; else exit 1; fi
-        echo "Multi line, double quotes: $MULTI_LINE_DOUBLE_QUOTES" 
+        if [[ "${{ env.MULTI_LINE_SINGLE_QUOTES }}" =~ "Hello Development" ]]; then echo "Multi Success"; else exit 1; fi
+        echo 'Multi line, double quotes: $MULTI_LINE_DOUBLE_QUOTES' 
         if [[ '${{ env.MULTI_LINE_DOUBLE_QUOTES }}' =~ "Hello Development" ]]; then echo "Multi Success"; else exit 1; fi
