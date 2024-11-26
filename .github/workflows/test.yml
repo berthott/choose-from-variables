@@ -14,5 +14,4 @@ jobs:
         selection: production
     - name: Print chosen variable
       run: |
-        echo $GITHUB_CONTEXT
-        if [[ ${{ env.SINGLE_LINE }} == 'Production Test' ]]; then echo "Success"; else exit 1; fi
+        [[ ${{ env.SINGLE_LINE }} != "Production Test" ]] && exit 1
