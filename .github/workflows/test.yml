@@ -20,5 +20,5 @@ jobs:
         selection: development
     - name: Test the environment variables
       run: |
-        if [[ ${{ env.SINGLE_LINE }} == "Production Test" ]]; then echo "Success"; else exit 1; fi
-        if [[ ${{ env.MULTI_LINE }} == *"Hello Development"* ]]; then echo "Success"; else exit 1; fi
+        if [[ ${{ env.SINGLE_LINE }} == "Production Test" ]]; then echo "Single Success"; else exit 1; fi
+        if [[ ${{ env.MULTI_LINE }} == *"Hello Development"* ]]; then echo "Multi Success"; else exit 1; fi
