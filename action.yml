@@ -5,16 +5,15 @@ branding:
   color: 'purple'
 
 inputs:
+  variables:
+    description: 'Your github variables or secrets'
+    required: true
   variable:
     description: 'The variable to choose from'
     required: true
   selection:
     description: 'The selection to make from the variable'
     required: true
-  secret:
-    description: 'Whether the variable is a secret'
-    type: boolean
-    required: false
   multiline:
     description: 'Whether the variable is multiline'
     type: boolean
@@ -23,9 +22,9 @@ inputs:
 runs:  
   steps:
     - name: 'Choose single line from variable'
-      if: ${{ inputs.secret != true && inputs.multiline != true }}
+      if: ${{ inputs.multiline != true }}
       run: |
-        ${{ inputs.variable }}=$(echo "${{ vars[inputs.variable] }}" | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
+        ${{ inputs.variable }}=$(echo "${{ variables[inputs.variable] }}" | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
         echo $${{ inputs.variable }}
         echo "${{ inputs.variable }}=$${{ inputs.variable }}" >> $GITHUB_ENV
       shell: bash
