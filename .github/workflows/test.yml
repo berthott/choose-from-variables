@@ -14,4 +14,4 @@ jobs:
         selection: production
     - name: Print chosen variable
       run: |
-        if [$SINGLE_LINE == "Production Test"]; then echo "Success"; else exit 1; fi
+        if [[ $SINGLE_LINE == "Production Test" ]]; then echo "Success"; else exit 1; fi
