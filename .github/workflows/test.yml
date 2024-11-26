@@ -18,6 +18,7 @@ jobs:
         variable: ${{ vars.MULTI_LINES }}
         output_name: MULTI_LINE
         selection: production
+        multiline: true
     - name: Test the environment variables
       run: |
         echo "Single: $SINGLE_LINE" 
