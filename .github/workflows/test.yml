@@ -14,4 +14,4 @@ jobs:
         selection: production
     - name: Print chosen variable
       run: |
-        [[ ${{ env.SINGLE_LINE }} != "Production Test" ]] && exit 1
+        [[ ${{ env.SINGLE_LINE }} !== "Production Test" ]] && exit 1
