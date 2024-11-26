@@ -15,5 +15,4 @@ jobs:
     - name: Print chosen variable
       run: |
         echo $SINGLE_LINE
-        if [[ $SINGLE_LINE == "Production Test" ]]; then echo "Success"; else exit 1; fi
-      shell: bash
+        if [[ $SINGLE_LINE = "Production Test" ]]; then echo "Success"; else exit 1; fi
