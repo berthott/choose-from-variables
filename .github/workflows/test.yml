@@ -13,6 +13,8 @@ jobs:
         output_name: SINGLE_LINE
         selection: production
     - name: Print chosen variable
+      env: 
+        SINGLE_LINE: $SINGLE_LINE
       run: |
         echo $SINGLE_LINE
         echo $SINGLE_LINE
