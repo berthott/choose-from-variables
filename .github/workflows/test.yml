@@ -17,11 +17,11 @@ jobs:
       with:
         variable: ${{ vars.MULTI_LINES }}
         output_name: MULTI_LINE
-        selection: production
+        selection: development
         multiline: true
     - name: Test the environment variables
       run: |
         echo "Single: $SINGLE_LINE" 
         if [[ ${{ env.SINGLE_LINE }} == "Production Test" ]]; then echo "Single Success"; else exit 1; fi
         echo "Multi: $MULTI_LINE" 
-        if [[ "${{ env.MULTI_LINE }}" == *"Hello Development"* ]]; then echo "Multi Success"; else exit 1; fi
+        if [[ "${{ env.MULTI_LINE }}" =~ "Hello Development" ]]; then echo "Multi Success"; else exit 1; fi
