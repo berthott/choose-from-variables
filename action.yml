@@ -14,26 +14,53 @@ inputs:
   selection:
     description: 'The selection to make from the variable'
     required: true
-  multiline:
-    description: 'Whether the variable is multiline'
+  multi_line:
+    description: 'Whether the variable is multi line'
     type: boolean
     required: false
+    default: false
+  single_quotes:
+    description: 'Whether the variable containes single quotes'
+    type: boolean
+    required: false
+    default: false
 
 runs:  
   using: 'composite'
   steps:
-    - name: 'Choose single line from variable'
-      if: inputs.multiline != 'true'
+    - name: 'Choose single line from variable with single quotes'
+      if: inputs.multi_line != 'true' && inputs.single_quotes == 'true'
       run: |
         ${{ inputs.output_name }}=$(echo '${{ inputs.variable }}' | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
         echo $${{ inputs.output_name }}
         echo "${{ inputs.output_name }}=$${{ inputs.output_name }}" >> $GITHUB_ENV
       shell: bash
 
-    - name: 'Choose multiline line from variable'
-      if: inputs.multiline == 'true'
+    - name: 'Choose single line from variable with double quotes'
+      if: inputs.multi_line != 'true' && inputs.single_quotes != 'true'
+      run: |
+        ${{ inputs.output_name }}=$(echo "${{ inputs.variable }}" | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
+        echo $${{ inputs.output_name }}
+        echo "${{ inputs.output_name }}=$${{ inputs.output_name }}" >> $GITHUB_ENV
+      shell: bash
+
+    - name: 'Choose multi line line from variable with single quotes'
+      if: inputs.multi_line == 'true' && inputs.single_quotes == 'true'
       run: |
         ${{ inputs.output_name }}=$(echo '${{ inputs.variable }}' | awk -v env="${{ inputs.selection }}" '
+          $0 ~ "^"env"=" {printing=1; sub("^"env"=", ""); print; next}
+          printing && $0 ~ /^[a-z]+=/ {exit}
+          printing {print}
+        ')
+        echo "${{ inputs.output_name }}<<EOF" >> $GITHUB_ENV
+        echo "$${{ inputs.output_name }}" >> $GITHUB_ENV
+        echo "EOF" >> $GITHUB_ENV
+      shell: bash
+
+    - name: 'Choose multi line line from variable with double quotes'
+      if: inputs.multi_line == 'true' && inputs.single_quotes != 'true'
+      run: |
+        ${{ inputs.output_name }}=$(echo "${{ inputs.variable }}" | awk -v env="${{ inputs.selection }}" '
           $0 ~ "^"env"=" {printing=1; sub("^"env"=", ""); print; next}
           printing && $0 ~ /^[a-z]+=/ {exit}
           printing {print}

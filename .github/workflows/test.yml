@@ -6,22 +6,41 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Choose single variable
+    - name: Choose single variable with single quotes
       uses: ./ # Use the action in the current repository
       with:
-        variable: ${{ vars.SINGLE_LINES }}
-        output_name: SINGLE_LINE
+        variable: ${{ vars.SINGLE_LINES_SINGLE_QUOTES }}
+        output_name: SINGLE_LINE_SINGLE_QUOTES
         selection: production
-    - name: Choose multiple variable
+        single_quotes: true
+    - name: Choose single variable with double quotes
       uses: ./ # Use the action in the current repository
       with:
-        variable: ${{ vars.MULTI_LINES }}
-        output_name: MULTI_LINE
+        variable: ${{ vars.SINGLE_LINES_DOUBLE_QUOTES }}
+        output_name: SINGLE_LINE_DOUBLE_QUOTES
+        selection: production
+    - name: Choose multiple variable with single quotes
+      uses: ./ # Use the action in the current repository
+      with:
+        variable: ${{ vars.MULTI_LINES_SINGLE_QUOTES }}
+        output_name: MULTI_LINE_SINGLE_QUOTES
         selection: development
-        multiline: true
+        multi_line: true
+    - name: Choose multiple variable with double quotes
+      uses: ./ # Use the action in the current repository
+      with:
+        variable: ${{ vars.MULTI_LINES_DOUBLE_QUOTES }}
+        output_name: MULTI_LINE_DOUBLE_QUOTES
+        selection: development
+        multi_line: true
+        double_quotes: true
     - name: Test the environment variables
       run: |
-        echo "Single: $SINGLE_LINE" 
-        if [[ ${{ env.SINGLE_LINE }} == "Production Test" ]]; then echo "Single Success"; else exit 1; fi
-        echo "Multi: $MULTI_LINE" 
+        echo "Single line, single quotes: $SINGLE_LINE_SINGLE_QUOTES" 
+        if [[ ${{ env.SINGLE_LINE_SINGLE_QUOTES }} == "Production Test" ]]; then echo "Single Success"; else exit 1; fi
+        echo "Single line, double quotes: $SINGLE_LINE_DOUBLE_QUOTES" 
+        if [[ ${{ env.SINGLE_LINE_DOUBLE_QUOTES }} == "Production Test" ]]; then echo "Single Success"; else exit 1; fi
+        echo "Multi line, single quotes: $MULTI_LINE_SINGLE_QUOTES" 
+        if [[ '${{ env.MULTI_LINE }}' =~ "Hello Development" ]]; then echo "Multi Success"; else exit 1; fi
+        echo "Multi line, double quotes: $MULTI_LINE_DOUBLE_QUOTES" 
         if [[ '${{ env.MULTI_LINE }}' =~ "Hello Development" ]]; then echo "Multi Success"; else exit 1; fi
