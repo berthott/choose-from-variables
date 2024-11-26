@@ -13,9 +13,7 @@ jobs:
         output_name: SINGLE_LINE
         selection: production
     - name: Print chosen variable
-      env: 
-        SINGLE_LINE: "hallo hallo"
       run: |
         echo $GITHUB_CONTEXT
         echo $SINGLE_LINE
-        if [[ "$SINGLE_LINE" = "hallo hallo" ]]; then echo "Success"; else exit 1; fi
+        if [[ "$SINGLE_LINE" = 'Production Test' ]]; then echo "Success"; else exit 1; fi
