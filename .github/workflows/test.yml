@@ -6,12 +6,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Choose variable
+    - name: Choose single variable
       uses: ./ # Use the action in the current repository
       with:
         variable: ${{ vars.SINGLE_LINES }}
         output_name: SINGLE_LINE
         selection: production
-    - name: Print chosen variable
+    - name: Choose multiple variable
+      uses: ./ # Use the action in the current repository
+      with:
+        variable: ${{ vars.MULTI_LINES }}
+        output_name: MULTI_LINE
+        selection: development
+    - name: Test the environment variables
       run: |
-        [ ${{ env.SINGLE_LINE }} != "Production Test" ] && exit 1
+        if [[ ${{ env.SINGLE_LINE }} == "Production Test" ]]; then echo "Success"; else exit 1; fi
+        if [[ ${{ env.MULTI_LINE }} == *"Hello Development"* ]]; then echo "Success"; else exit 1; fi
