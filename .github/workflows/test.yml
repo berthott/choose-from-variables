@@ -1,5 +1,5 @@
 name: Test choosing from a variable
-on: ["push"]
+on: [push]
 
 jobs:
   test:
