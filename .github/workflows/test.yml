@@ -15,4 +15,4 @@ jobs:
     - name: Print chosen variable
       run: |
         echo $GITHUB_CONTEXT
-        if [[ ${{ env.SINGLE_LINE }}" == 'Production Test' ]]; then echo "Success"; else exit 1; fi
+        if [[ ${{ env.SINGLE_LINE }} == 'Production Test' ]]; then echo "Success"; else exit 1; fi
