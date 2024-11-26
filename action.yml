@@ -38,6 +38,7 @@ runs:
           printing && $0 ~ /^[a-z]+=/ {exit}
           printing {print}
         ')
+        echo ${{ inputs.output_name }}
         echo "${{ inputs.output_name }}<<EOF" >> $GITHUB_ENV
         echo "$${{ inputs.output_name }}" >> $GITHUB_ENV
         echo "EOF" >> $GITHUB_ENV
