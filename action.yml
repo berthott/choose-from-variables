@@ -48,7 +48,7 @@ runs:
       if: inputs.multi_line == 'true' && inputs.single_quotes == 'true'
       run: |
         echo "${{ inputs.variable }}"
-        ${{ inputs.output_name }}=$(echo "${{ inputs.variable }}")
+        ${{ inputs.output_name }}=$("${{ inputs.variable }}")
         echo $${{ inputs.output_name }}
         echo "${{ inputs.output_name }}<<EOF" >> $GITHUB_ENV
         echo "$${{ inputs.output_name }}" >> $GITHUB_ENV
