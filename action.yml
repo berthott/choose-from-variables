@@ -58,7 +58,7 @@ runs:
         echo "$${{ inputs.output_name }}" >> $GITHUB_ENV
         echo "EOF" >> $GITHUB_ENV
         echo $${{ inputs.output_name }}
-      shell: bash
+      shell: sh
 
     - name: 'Choose multi line line from variable with double quotes'
       if: inputs.multi_line == 'true' && inputs.single_quotes != 'true'
