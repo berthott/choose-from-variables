@@ -52,7 +52,7 @@ runs:
           $0 ~ "^"env"="{printing=1; sub("^"env"=", ""); print; next}
           printing &&$0 ~ /^[a-z]+=/ {exit}
           printing {print}
-        ') | awk '{sub(/^ /, ""); print}'
+        ' | awk '{sub(/^ /, ""); print}')
         echo $${{ inputs.output_name }}
         echo "${{ inputs.output_name }}<<EOF" >> $GITHUB_ENV
         echo "$${{ inputs.output_name }}" >> $GITHUB_ENV
