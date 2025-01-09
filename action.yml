@@ -28,7 +28,7 @@ inputs:
 runs:  
   using: 'composite'
   steps:
-    - name: 'Choose single line from variable with single quotes'
+  - name: 'Choose single line from variable with single quotes'
       if: inputs.multi_line != 'true' && inputs.single_quotes == 'true'
       run: |
         ${{ inputs.output_name }}=$(echo "${{ inputs.variable }}" | grep "^${{ inputs.selection }}=" | cut -d '=' -f2 | tr -d '\r\n')
@@ -52,9 +52,11 @@ runs:
           printing && $0 ~ /^[a-z]+=/ {exit}
           printing {print}
         ')
+        echo $${{ inputs.output_name }}
         echo "${{ inputs.output_name }}<<EOF" >> $GITHUB_ENV
         echo "$${{ inputs.output_name }}" >> $GITHUB_ENV
         echo "EOF" >> $GITHUB_ENV
+        echo $${{ inputs.output_name }}
       shell: bash
 
     - name: 'Choose multi line line from variable with double quotes'
