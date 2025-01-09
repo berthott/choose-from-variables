@@ -48,8 +48,8 @@ runs:
       if: inputs.multi_line == 'true' && inputs.single_quotes == 'true'
       run: |
         ${{ inputs.output_name }}=$(echo "${{ inputs.variable }}" | awk -v env="${{ inputs.selection }}" '
-          $0 ~ "^"env"=" {printing=1; sub("^"env"=", ""); print; next}
-          printing && $0 ~ /^[a-z]+=/ {exit}
+          $0 ~"^"env"=" {printing=1; sub("^"env"=", ""); print; next}
+          printing && $0 ~/^[a-z]+=/ {exit}
           printing {print}
         ')
         echo $${{ inputs.output_name }}
