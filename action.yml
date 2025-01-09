@@ -44,11 +44,24 @@ runs:
         echo "${{ inputs.output_name }}=$${{ inputs.output_name }}" >> $GITHUB_ENV
       shell: bash
 
+    - name: Set multi line environment variable
+      if: inputs.multi_line == 'true'
+      run: |
+        echo "MULTI_LINE<<EOF" >> $GITHUB_ENV
+        echo "${{ inputs.variable }}" >> $GITHUB_ENV
+        echo "EOF" >> $GITHUB_ENV
+      shell: bash
+
     - name: 'Choose multi line line from variable with single quotes'
       if: inputs.multi_line == 'true' && inputs.single_quotes == 'true'
       run: |
-        echo "${{ inputs.variable }}"
-        ${{ inputs.output_name }}=${{ inputs.variable }}
+        echo $MULTI_LINE
+        ${{ inputs.output_name }}=$(echo $MULTI_LINE | awk -v env="${{ inputs.selection }}" '
+          $0 ~ "^"env"="{printing=1; sub("^"env"=", ""); print; next}
+          printing &&$0 ~ /^[a-z]+=/ {exit}
+          printing {print}
+        ')
+        ${{ inputs.output_name }}=$(echo $${{ inputs.output_name }} | sed 's/^ //')
         echo $${{ inputs.output_name }}
         echo "${{ inputs.output_name }}<<EOF" >> $GITHUB_ENV
         echo "$${{ inputs.output_name }}" >> $GITHUB_ENV
